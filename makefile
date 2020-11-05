@@ -37,6 +37,11 @@ initialise: generate-port
 		ghcr.io/compsoc-edinburgh/service-${SUBDOMAIN}'
 	rm .open-port
 	
+restart:
+	ssh ${REMOTE} 'docker restart service-${SUBDOMAIN}'
+
+shell:
+	ssh -t ${REMOTE} 'docker exec -it service-${SUBDOMAIN} sh'
 
 teardown:
 	ssh ${REMOTE} 'docker stop service-${SUBDOMAIN}'

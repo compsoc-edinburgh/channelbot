@@ -3,10 +3,12 @@ import os
 import sys
 import traceback
 
+
 import discord
 
 from discord.ext import commands
-
+import sys
+sys.path.append('/')
 import secrets as config
 
 INTENTS = discord.Intents.default()
