@@ -1,13 +1,11 @@
-FROM node:15.0.1-alpine
+FROM python:3-slim
 
-WORKDIR /app
+RUN mkdir /usr/src/app
+WORKDIR /usr/src/app
 
-COPY package*.json ./
+COPY requirements.txt .
+RUN pip install -r requirements.txt
 
-RUN npm install
+COPY bot.py .
 
-COPY . .
-
-EXPOSE ${PORT}
-
-CMD [ "npm", "run", "start" ]
+CMD ["python", "bot.py"]
