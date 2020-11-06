@@ -25,6 +25,10 @@ def in_managed_channnel(ctx):
 @CLIENT.event
 async def on_ready():
     print(f"Logged in to Discord as {CLIENT.user}")
+    for channel_config in config.CHANNELS:
+        message_channel = CLIENT.get_channel(channel_config.get("reaction_channel"))
+        message = await message_channel.fetch_message(channel_config.get("reaction_message"))
+        await message.add_reaction(channel_config.get("reaction_emoji"))
 
 
 def should_manage_from_reaction_emoji(channel_config, payload):
