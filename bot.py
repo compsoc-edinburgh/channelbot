@@ -7,8 +7,7 @@ import traceback
 import discord
 
 from discord.ext import commands
-import sys
-sys.path.append('/')
+
 import secrets as config
 
 INTENTS = discord.Intents.default()
@@ -70,11 +69,8 @@ async def on_raw_reaction_add(payload):
                 reason="Emoji React",
                 read_messages=not current_permissions.read_messages,
             )
-
-    if payload.message_id in [item["reaction_message"] for item in config.CHANNELS]:
-        reaction_channel = guild.get_channel(payload.channel_id)
-        message = await reaction_channel.fetch_message(payload.message_id)
-        await message.remove_reaction(payload.emoji, payload.member)
+            message = await target_channel.fetch_message(payload.message_id)
+            await message.remove_reaction(payload.emoji, payload.member)
 
 
 @CLIENT.command()

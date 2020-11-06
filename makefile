@@ -28,7 +28,7 @@ initialise: generate-port
 		--label "traefik.enable=true" \
 		-p ${PORT}:${PORT} \
 		-e PORT=${PORT} \
-		-v /secrets/service-${SUBDOMAIN}:/secrets \
+		-v /secrets/service-${SUBDOMAIN}:/usr/src/app/secrets \
 		-e "DATABASE_URL=postgresql://postgres:mysecretpassword@postgres:5432/service-db-${SUBDOMAIN}" \
 		-e "FILE_UPLOAD=https://service-simple-storage:3456/${SUBDOMAIN}" \
 		--label "com.centurylinklabs.watchtower.enable=true" \
