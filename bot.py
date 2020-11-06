@@ -57,6 +57,7 @@ def should_manage_from_reaction_emoji(channel_config, payload):
 
 @CLIENT.event
 async def on_raw_reaction_add(payload):
+    print(payload)
     guild = CLIENT.get_guild(payload.guild_id)
     for channel_config in config.CHANNELS:
         if should_manage_from_reaction_emoji(channel_config, payload):
@@ -69,7 +70,8 @@ async def on_raw_reaction_add(payload):
                 reason="Emoji React",
                 read_messages=not current_permissions.read_messages,
             )
-            message = await target_channel.fetch_message(payload.message_id)
+            message_channel = guild.get_channel(payload.channel_id)
+            message = await message_channel.fetch_message(payload.message_id)
             await message.remove_reaction(payload.emoji, payload.member)
 
 
