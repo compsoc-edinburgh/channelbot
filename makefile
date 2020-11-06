@@ -40,6 +40,9 @@ initialise: generate-port
 restart:
 	ssh ${REMOTE} 'docker restart service-${SUBDOMAIN}'
 
+stop:
+	ssh ${REMOTE} 'docker stop service-${SUBDOMAIN}'
+
 shell:
 	ssh -t ${REMOTE} 'docker exec -it service-${SUBDOMAIN} sh'
 

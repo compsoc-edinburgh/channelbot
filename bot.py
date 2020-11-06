@@ -49,6 +49,7 @@ def should_manage_from_reaction_emoji(channel_config, payload):
     # Emoji Check
     target = channel_config.get("reaction_emoji")
     received = payload.emoji
+    print(received.name.encode("raw_unicode_escape"), target)
     if type(target) == bytes and received.is_unicode_emoji():
         return target == received.name.encode("raw_unicode_escape")
 
@@ -61,6 +62,7 @@ async def on_raw_reaction_add(payload):
     guild = CLIENT.get_guild(payload.guild_id)
     for channel_config in config.CHANNELS:
         if should_manage_from_reaction_emoji(channel_config, payload):
+            print(channel_config)
             target_channel = guild.get_channel(channel_config["channel_id"])
 
             current_permissions = target_channel.permissions_for(payload.member)
@@ -81,7 +83,7 @@ async def on_raw_reaction_add(payload):
 async def add(ctx, *, member):
     found = None
     for guild_member in ctx.guild.members:
-        if f"{guild_member.name}#{guild_member.discriminator}" == member:
+        if guild_member.mentioned_in(ctx.message):
             found = guild_member
 
     if not found:
@@ -95,6 +97,28 @@ async def add(ctx, *, member):
     await channel.set_permissions(found, reason=message_link, read_messages=True)
     await ctx.send(f"Done.")
 
+@CLIENT.command()
+@commands.has_permissions(manage_channels=True)
+async def report(ctx, *, member):
+    found = None
+    for guild_member in ctx.guild.members:
+        if guild_member.mentioned_in(ctx.message):
+            found = guild_member
+
+    if not found:
+        await ctx.send(f"Couldn't find `{member}` in guild.")
+        return
+
+    print([r for r in ctx.guild.roles if r.name == "quarantined"][0])
+    channel = ctx.message.channel
+    await channel.set_permissions(
+                found,
+                reason=f"Reported by {ctx.author.name}#{ctx.author.discriminator}",
+                read_messages=False,
+            )
+    await found.edit( reason=f"Reported by {ctx.author.name}#{ctx.author.discriminator}", roles=[r for r in ctx.guild.roles if r.name == "quarantined"])
+
+    await ctx.send(f"{found.mention} has been reported by {ctx.author.mention} — CC <@&315339680641974273>")
 
 @CLIENT.event
 async def on_command_error(ctx, error):
