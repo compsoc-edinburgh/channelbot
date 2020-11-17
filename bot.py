@@ -27,7 +27,9 @@ async def on_ready():
     print(f"Logged in to Discord as {CLIENT.user}")
     for channel_config in config.CHANNELS:
         message_channel = CLIENT.get_channel(channel_config.get("reaction_channel"))
-        message = await message_channel.fetch_message(channel_config.get("reaction_message"))
+        message = await message_channel.fetch_message(
+            channel_config.get("reaction_message")
+        )
         await message.add_reaction(channel_config.get("reaction_emoji"))
 
 
@@ -53,28 +55,27 @@ def should_manage_from_reaction_emoji(channel_config, payload):
     # Emoji Check
     target = channel_config.get("reaction_emoji")
     received = payload.emoji
-    print(received.name.encode("raw_unicode_escape"), target)
-    if type(target) == bytes and received.is_unicode_emoji():
-        return target == received.name.encode("raw_unicode_escape")
+    print(received.name.encode("raw_unicode_escape"), target, received.name == target)
+    if received.is_unicode_emoji():
+        return target == received.name
 
     return False
 
 
 @CLIENT.event
 async def on_raw_reaction_add(payload):
-    print(payload)
+    if payload.user_id == 773955219553124363:
+        return
     guild = CLIENT.get_guild(payload.guild_id)
     for channel_config in config.CHANNELS:
         if should_manage_from_reaction_emoji(channel_config, payload):
             print(channel_config)
             target_channel = guild.get_channel(channel_config["channel_id"])
 
-            current_permissions = target_channel.permissions_for(payload.member)
-
             await target_channel.set_permissions(
                 payload.member,
                 reason="Emoji React",
-                read_messages=not current_permissions.read_messages,
+                read_messages=True,
             )
             message_channel = guild.get_channel(payload.channel_id)
             message = await message_channel.fetch_message(payload.message_id)
@@ -101,6 +102,7 @@ async def add(ctx, *, member):
     await channel.set_permissions(found, reason=message_link, read_messages=True)
     await ctx.send(f"Done.")
 
+
 @CLIENT.command()
 @commands.has_permissions(manage_channels=True)
 async def report(ctx, *, member):
@@ -116,13 +118,19 @@ async def report(ctx, *, member):
     print([r for r in ctx.guild.roles if r.name == "quarantined"][0])
     channel = ctx.message.channel
     await channel.set_permissions(
-                found,
-                reason=f"Reported by {ctx.author.name}#{ctx.author.discriminator}",
-                read_messages=False,
-            )
-    await found.edit( reason=f"Reported by {ctx.author.name}#{ctx.author.discriminator}", roles=[r for r in ctx.guild.roles if r.name == "quarantined"])
+        found,
+        reason=f"Reported by {ctx.author.name}#{ctx.author.discriminator}",
+        read_messages=False,
+    )
+    await found.edit(
+        reason=f"Reported by {ctx.author.name}#{ctx.author.discriminator}",
+        roles=[r for r in ctx.guild.roles if r.name == "quarantined"],
+    )
 
-    await ctx.send(f"{found.mention} has been reported by {ctx.author.mention} — CC <@&315339680641974273>")
+    await ctx.send(
+        f"{found.mention} has been reported by {ctx.author.mention} — CC <@&315339680641974273>"
+    )
+
 
 @CLIENT.event
 async def on_command_error(ctx, error):
