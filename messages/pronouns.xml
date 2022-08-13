@@ -31,10 +31,10 @@ Pronoun roles help others learn how to refer to you.
     <label>They/Them</label>
     <emoji><![CDATA[<:flag_nonbinary:776548637773660170>]]></emoji>
   </button>
-  <button style="secondary" id="pronouns_ask" actions="toggle-role:778256107654610965" row="1">
+  <button style="secondary" id="pronouns_ask" action="toggle-role:778256107654610965" row="1">
     <label>Ask me for pronouns!</label>
   </button>
-  <button style="secondary" id="pronouns_none" actions="toggle-role:817048087398318121" row="1">
+  <button style="secondary" id="pronouns_none" action="toggle-role:817048087398318121" row="1">
     <label>No pronouns</label>
   </button>
 </message>
