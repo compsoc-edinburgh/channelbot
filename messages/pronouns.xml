@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message>
+  <content></content>
+  <embed>
+    <title>Assign yourself some roles!</title>
+    <content><![CDATA[
+Click buttons below to assign yourself some roles! These aren't mandatory, but we encourage them.
+
+════════
+    ]]></content>
+    <field>
+      <title>PRONOUNS</title>
+      <content><![CDATA[
+Pronoun roles help others learn how to refer to you.
+
+:female_sign: She/Her
+:male_sign: He/Him
+<:flag_nonbinary:776548637773660170> They/Them
+      ]]></content>
+    </field>
+  </embed>
+  <button style="secondary" id="pronouns_sheher" action="toggle-role:pronouns:776500063773661330">
+    <label>She/Her</label>
+    <emoji>♀️</emoji>
+  </button>
+  <button style="secondary" id="pronouns_hehim" action="toggle-role:pronouns:776500063773661330">
+    <label>He/Him</label>
+    <emoji>♂️</emoji>
+  </button>
+  <button style="secondary" id="pronouns_theythem" action="toggle-role:pronouns:776500063773664022">
+    <label>They/Them</label>
+    <emoji><![CDATA[<:flag_nonbinary:776548637773660170>]]></emoji>
+  </button>
+</message>
