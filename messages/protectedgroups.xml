@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <message>
   <content></content>
-  <embed>
+  <embed colour="9602283">
     <title></title>
     <content><![CDATA[
 ════════
@@ -43,4 +43,5 @@ We also have private "opt-in" channels for under represented groups within our s
   <button style="secondary" id="protectedgroups_christianity" action="toggle-channel:778231564664438844" row="1">
     <label>#christianity</label>
     <emoji>⛪</emoji>
+  </button>
 </message>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <message>
   <content></content>
-  <embed>
+  <embed colour="13272299">
     <title></title>
     <content><![CDATA[
 ════════
@@ -20,31 +20,31 @@ What year are you in? This may be used to ping relevant groups in academic annou
       ]]></content>
     </field>
   </embed>
-  <button style="secondary" id="year_1" action="toggle-role:year:776500063773661330">
+  <button style="secondary" id="year_1" action="toggle-role:year:357306845301309440">
     <label></label>
     <emoji>1️⃣</emoji>
   </button>
-  <button style="secondary" id="year_2" action="toggle-role:year:776500063773661330">
+  <button style="secondary" id="year_2" action="toggle-role:year:357306934094987275">
     <label></label>
     <emoji>2️⃣</emoji>
   </button>
-  <button style="secondary" id="year_3" action="toggle-role:year:776500063773664022">
+  <button style="secondary" id="year_3" action="toggle-role:year:357306954386767873">
     <label></label>
     <emoji>3️⃣</emoji>
   </button>
-  <button style="secondary" id="year_4" action="toggle-role:year:1007920208704438272">
+  <button style="secondary" id="year_4" action="toggle-role:year:357306974876073994">
     <label></label>
     <emoji>4️⃣</emoji>
   </button>
-  <button style="secondary" id="year_5" action="toggle-role:year:858401420956532766">
+  <button style="secondary" id="year_5" action="toggle-role:year:409496513044021248">
     <label></label>
     <emoji>5️⃣</emoji>
   </button>
-  <button style="secondary" id="year_0" action="toggle-role:year:776500063773661330" row="1">
+  <button style="secondary" id="year_0" action="toggle-role:year:716144304707600464" row="1">
     <label>Incoming or Prospective Student</label>
     <emoji>0️⃣</emoji>
   </button>
-  <button style="secondary" id="year_grad" action="toggle-channel:816393658407845970" row="1">
+  <button style="secondary" id="year_grad" action="toggle-role:year:409496563686309892" row="1">
     <label>Graduated</label>
     <emoji>🎓</emoji>
   </button>
