@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message>
+  <content></content>
+  <embed>
+    <title></title>
+    <content><![CDATA[
+════════
+    ]]></content>
+    <field>
+      <title>ACADEMIC YEAR</title>
+      <content><![CDATA[
+What year are you in? This may be used to ping relevant groups in academic announcements.
+
+:one: Incoming or prospective student
+:one: First year
+⋮ ⋮
+:four: Fourth year
+:five: Fifth year in integrated masters, or First year in Masters
+:mortar_board: Graduated
+      ]]></content>
+    </field>
+  </embed>
+  <button style="secondary" id="year_1" action="toggle-role:year:776500063773661330">
+    <label>She/Her</label>
+    <emoji>1️⃣</emoji>
+  </button>
+  <button style="secondary" id="year_2" action="toggle-role:year:776500063773661330">
+    <label>He/Him</label>
+    <emoji>2️⃣</emoji>
+  </button>
+  <button style="secondary" id="year_3" action="toggle-role:year:776500063773664022">
+    <label></label>
+    <emoji>3️⃣</emoji>
+  </button>
+  <button style="secondary" id="year_4" action="toggle-role:year:776500063773664022">
+    <label></label>
+    <emoji>4️⃣</emoji>
+  </button>
+  <button style="secondary" id="year_5" action="toggle-role:year:776500063773664022">
+    <label></label>
+    <emoji>5️⃣</emoji>
+  </button>
+  <button style="secondary" id="year_0" action="toggle-role:year:776500063773661330">
+    <label>Incoming or Prospective Student</label>
+    <emoji>0️⃣</emoji>
+  </button>
+  <button style="secondary" id="year_grad" action="toggle-role:year:776500063773664022">
+    <label>Graduated</label>
+    <emoji>🎓</emoji>
+  </button>
+</message>
