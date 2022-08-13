@@ -154,7 +154,11 @@ async def perform_action(
         if target_channel is None:
             return
 
-        current_permissions = target_channel.permissions_for(interaction.user)
+        # Use overwrites_for rather than permissions_for, since we want to query
+        # the permissions listed on the channel (not the overall resolution). So
+        # an admin could still "add" or "remove" themselves from the channel
+        # overwrite, despite already having see-it-all access.
+        current_permissions = target_channel.overwrites_for(interaction.user)
 
         await target_channel.set_permissions(
             target=interaction.user,
