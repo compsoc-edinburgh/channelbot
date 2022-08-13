@@ -11,7 +11,7 @@
       <content><![CDATA[
 What year are you in? This may be used to ping relevant groups in academic announcements.
 
-:one: Incoming or prospective student
+:zero: Incoming or prospective student
 :one: First year
 ⋮ ⋮
 :four: Fourth year
@@ -21,11 +21,11 @@ What year are you in? This may be used to ping relevant groups in academic annou
     </field>
   </embed>
   <button style="secondary" id="year_1" action="toggle-role:year:776500063773661330">
-    <label>She/Her</label>
+    <label></label>
     <emoji>1️⃣</emoji>
   </button>
   <button style="secondary" id="year_2" action="toggle-role:year:776500063773661330">
-    <label>He/Him</label>
+    <label></label>
     <emoji>2️⃣</emoji>
   </button>
   <button style="secondary" id="year_3" action="toggle-role:year:776500063773664022">
@@ -44,7 +44,7 @@ What year are you in? This may be used to ping relevant groups in academic annou
     <label>Incoming or Prospective Student</label>
     <emoji>0️⃣</emoji>
   </button>
-  <button style="secondary" id="year_grad" action="toggle-role:year:776500063773664022" row="2">
+  <button style="secondary" id="year_grad" action="toggle-role:year:776500063773664022" row="1">
     <label>Graduated</label>
     <emoji>🎓</emoji>
   </button>
