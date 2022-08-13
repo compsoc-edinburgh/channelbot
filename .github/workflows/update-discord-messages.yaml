@@ -15,18 +15,34 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2.3.4
 
+      - name: Update main README message
+        uses: compsoc-edinburgh/discord-post-updater@xml-specs
+        with:
+          discord_token: ${{ secrets.discord_bot_token }}
+          post_xml: messages/readme.xml
+          discord_channel: '993137907378442240' # N.B. The quote marks here are required
+          discord_message: '1007933023221723157' # Optional, use quotes if specifying an ID
+
       - name: Update Pronouns
         uses: compsoc-edinburgh/discord-post-updater@xml-specs
         with:
           discord_token: ${{ secrets.discord_bot_token }}
           post_xml: messages/pronouns.xml
-          discord_channel: '765660106259562501' # N.B. The quote marks here are required
-          discord_message: new # Optional, use quotes if specifying an ID
+          discord_channel: '993137907378442240' # N.B. The quote marks here are required
+          discord_message: '1007933023221723157' # Optional, use quotes if specifying an ID
 
       - name: Update Academic Year
         uses: compsoc-edinburgh/discord-post-updater@xml-specs
         with:
           discord_token: ${{ secrets.discord_bot_token }}
           post_xml: messages/year.xml
-          discord_channel: '765660106259562501' # N.B. The quote marks here are required
-          discord_message: new # Optional, use quotes if specifying an ID
+          discord_channel: '993137907378442240' # N.B. The quote marks here are required
+          discord_message: '1007933024106725476' # Optional, use quotes if specifying an ID
+
+      - name: Update Protected Groups
+        uses: compsoc-edinburgh/discord-post-updater@xml-specs
+        with:
+          discord_token: ${{ secrets.discord_bot_token }}
+          post_xml: messages/protectedgroups.xml
+          discord_channel: '993137907378442240' # N.B. The quote marks here are required
+          discord_message: '1007933024740057089' # Optional, use quotes if specifying an ID

@@ -44,7 +44,7 @@ What year are you in? This may be used to ping relevant groups in academic annou
     <label>Incoming or Prospective Student</label>
     <emoji>0️⃣</emoji>
   </button>
-  <button style="secondary" id="year_grad" action="toggle-role:year:776500063773664022" row="1">
+  <button style="secondary" id="year_grad" action="toggle-channel:816393658407845970" row="1">
     <label>Graduated</label>
     <emoji>🎓</emoji>
   </button>

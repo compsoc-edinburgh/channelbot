@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message>
+  <content></content>
+  <embed>
+    <title></title>
+    <content><![CDATA[
+════════
+    ]]></content>
+    <field>
+      <title>UNDER-REPRESENTED GROUPS</title>
+      <content><![CDATA[
+We also have private "opt-in" channels for under represented groups within our society — lease let us know if you'd like to request a new one. Respecting your privacy, these are not assigned to you as roles but rather as direct additions to the channel access allowlists.
+
+:transgender_flag: #trans - A space for the trans* friends of CompSoc
+:heart: #poc - A space for people of colour
+:rainbow_flag: #lgbtqia+ - A space with queer vibes
+:woman: #women - A space for women
+:hindu_temple: #hinduism - A space for [TODO]
+:church: #christianity - A christian space
+      ]]></content>
+    </field>
+  </embed>
+  <button style="secondary" id="protectedgroups_trans" action="toggle-channel:772436921561514014" row="0">
+    <label>#trans</label>
+    <emoji>🏳️‍⚧️</emoji>
+  </button>
+  <button style="secondary" id="protectedgroups_poc" action="toggle-channel:774009860731174913" row="0">
+    <label>#poc</label>
+    <emoji>❤️</emoji>
+  </button>
+  <button style="secondary" id="protectedgroups_disabled" action="toggle-channel:774009955937812490" row="0">
+    <label>#lgbtqia+</label>
+    <emoji>🏳️‍🌈</emoji>
+  </button>
+  <button style="secondary" id="protectedgroups_women" action="toggle-channel:774009915634221056" row="1">
+    <label>#women</label>
+    <emoji>👩</emoji>
+  </button>
+  <button style="secondary" id="protectedgroups_hinduism" action="toggle-channel:778231484913287208" row="1">
+    <label>#hinduism</label>
+    <emoji>🛕</emoji>
+  </button>
+  <button style="secondary" id="protectedgroups_christianity" action="toggle-channel:778231564664438844" row="1">
+    <label>#christianity</label>
+    <emoji>⛪</emoji>
+</message>

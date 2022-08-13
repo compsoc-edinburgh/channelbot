@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message>
+  <content></content>
+  <embed>
+    <title>Welcome to the CompSoc server!</title>
+    <content><![CDATA[
+CompSoc is the University of Edinburgh's society for anyone interested in tech.
+
+════════
+    ]]></content>
+    <field>
+      <title>SUMMARY OF CHANNELS</title>
+      <content><![CDATA[
+We have channels for general and academic chatting, each CompSoc interest group, The Tardis Project, and more.
+
+Most of them are more-or-less obvious from their names, but here is a brief introduction for you:
+
+- <#315277951597936640> is for any and all chat
+- <#426505712697344003> if you don't want to shitpost in #general
+- <#776739926536355852> for career postings, career chat, advice
+- <#715859587148021850>, <#315278744572919809>, <#315278752508805131>, <#315278779054292992>, <#315278821362368512>, <#409847179247747073> for relevant academic chat. If you're on the MSc, pick inf5!
+- <#359905927643791360>, <#730146239315837052>, <#900328057708089385>, <#408325783988469760>, <#315506334864769024>, <#761642631259750411>, <#761638659476029447> for relevant [Special Interest Groups](https://comp-soc.com/special-interest-groups)
+- <#315278844842213379> for The Tardis Project
+
+━━
+      ]]></content>
+    </field>
+    <field>
+      <title>WHAT ARE ALL THE BOTS?</title>
+      <content><![CDATA[
+CompSoc bridges communication between multiple platforms to allow you to chat across technical borders! At the moment we have Discord and IRC — so people on IRC show up as bots on Discord! Don't worry, we're not under a massive bot attack or anything :)
+
+━━
+      ]]></content>
+    </field>
+    <field>
+      <title>WANT TO HELP SHAPE COMPSOC?</title>
+      <content><![CDATA[
+If you are a first year, you can apply to become a first-year communications representative in autumn of your first year! This is a common and easy way to familiarise yourself with internals of the CompSoc org!
+For all other positions (including President, Secretary, Treasurer), elections for the subsequent academic year take place at the **Annual General Meeting** in April! You can nominate yourself!
+
+━━
+      ]]></content>
+    </field>
+    <field>
+      <title>INVITES</title>
+      <content><![CDATA[
+If you want to invite your friends to this server, send them this:
+[`https://comp-soc.com/chat`](https://comp-soc.com/chat)
+If you know they prefer Discord you can use this invite link:
+[`https://discord.com/invite/e4y8Vy5`](https://discord.com/invite/e4y8Vy5)
+
+      ]]></content>
+    </field>
+  </embed>
+</message>
