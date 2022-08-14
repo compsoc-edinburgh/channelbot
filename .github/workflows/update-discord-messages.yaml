@@ -29,7 +29,7 @@ jobs:
               - 'messages/protectedgroups.xml'
 
       - name: Update main README message
-        uses: compsoc-edinburgh/discord-post-updater@xml-specs
+        uses: compsoc-edinburgh/discord-post-updater@master
         if: steps.changes.outputs.readme == 'true'
         with:
           discord_token: ${{ secrets.discord_bot_token }}
@@ -38,7 +38,7 @@ jobs:
           discord_message: '1008385178718191719' # Optional, use quotes if specifying an ID
 
       - name: Update Pronouns
-        uses: compsoc-edinburgh/discord-post-updater@xml-specs
+        uses: compsoc-edinburgh/discord-post-updater@master
         if: steps.changes.outputs.pronouns == 'true'
         with:
           discord_token: ${{ secrets.discord_bot_token }}
@@ -47,7 +47,7 @@ jobs:
           discord_message: '1008385179812892703' # Optional, use quotes if specifying an ID
 
       - name: Update Academic Year
-        uses: compsoc-edinburgh/discord-post-updater@xml-specs
+        uses: compsoc-edinburgh/discord-post-updater@master
         if: steps.changes.outputs.year == 'true'
         with:
           discord_token: ${{ secrets.discord_bot_token }}
@@ -56,7 +56,7 @@ jobs:
           discord_message: '1008385180945363014' # Optional, use quotes if specifying an ID
 
       - name: Update Protected Groups
-        uses: compsoc-edinburgh/discord-post-updater@xml-specs
+        uses: compsoc-edinburgh/discord-post-updater@master
         if: steps.changes.outputs.protectedgroups == 'true'
         with:
           discord_token: ${{ secrets.discord_bot_token }}
