@@ -15,8 +15,23 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2.3.4
 
+      - uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          list-files: none
+          filters: |
+            readme:
+              - 'messages/readme.xml'
+            pronouns:
+              - 'messages/pronouns.xml'
+            year:
+              - 'messages/year.xml'
+            protectedgroups:
+              - 'messages/protectedgroups.xml'
+
       - name: Update main README message
         uses: compsoc-edinburgh/discord-post-updater@xml-specs
+        if: steps.changes.outputs.readme == 'true'
         with:
           discord_token: ${{ secrets.discord_bot_token }}
           post_xml: messages/readme.xml
@@ -25,6 +40,7 @@ jobs:
 
       - name: Update Pronouns
         uses: compsoc-edinburgh/discord-post-updater@xml-specs
+        if: steps.changes.outputs.pronouns == 'true'
         with:
           discord_token: ${{ secrets.discord_bot_token }}
           post_xml: messages/pronouns.xml
@@ -33,6 +49,7 @@ jobs:
 
       - name: Update Academic Year
         uses: compsoc-edinburgh/discord-post-updater@xml-specs
+        if: steps.changes.outputs.year == 'true'
         with:
           discord_token: ${{ secrets.discord_bot_token }}
           post_xml: messages/year.xml
@@ -41,6 +58,7 @@ jobs:
 
       - name: Update Protected Groups
         uses: compsoc-edinburgh/discord-post-updater@xml-specs
+        if: steps.changes.outputs.protectedgroups == 'true'
         with:
           discord_token: ${{ secrets.discord_bot_token }}
           post_xml: messages/protectedgroups.xml
