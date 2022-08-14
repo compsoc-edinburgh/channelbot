@@ -131,7 +131,7 @@ async def perform_action(
                 ]
                 removed_roles.extend(other_roles_filtered)
 
-                await interaction.user.remove_roles(*other_roles_filtered, reason="Self-selected (unique group)", atomic=True)
+                await interaction.user.remove_roles(*other_roles_filtered, reason="Self-selected (uniqueness constraint)", atomic=True)
 
         # Set the notice text
         if target_role in current_roles:
@@ -162,7 +162,7 @@ async def perform_action(
 
         await target_channel.set_permissions(
             target=interaction.user,
-            reason="Emoji React",
+            reason="Self-selected",
             read_messages=not current_permissions.read_messages,
         )
 
