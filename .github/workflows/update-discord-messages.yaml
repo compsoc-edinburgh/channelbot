@@ -14,6 +14,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2.3.4
 
+      # GitHub Actions doesn't have a native way to execute certain steps within
+      # a job based on what files were changed. For this, we use an external
+      # action, which sets the "steps.changes.outputs.<filter-name>" to true or
+      # false depending on whether it changed.
+      #
+      # It's important to execute only message updates if the file changed, since
+      # an update will change the Discord embed's "Last Updated" datetime, even
+      # if there were no content changes. We try to maintain that datetime as
+      # accurate as possible, so we want to trigger an update only if there was
+      # an actual change.
       - uses: dorny/paths-filter@v2
         id: changes
         with:
