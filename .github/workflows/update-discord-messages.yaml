@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - yutotakano/add-role-messages # remove when merging to main
     paths:
       - 'messages/**'
 
