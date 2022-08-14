@@ -1,0 +1,75 @@
+name: Update Discord Messages
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'messages/**'
+
+jobs:
+  update-discord:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.3.4
+
+      # GitHub Actions doesn't have a native way to execute certain steps within
+      # a job based on what files were changed. For this, we use an external
+      # action, which sets the "steps.changes.outputs.<filter-name>" to true or
+      # false depending on whether it changed.
+      #
+      # It's important to execute only message updates if the file changed, since
+      # an update will change the Discord embed's "Last Updated" datetime, even
+      # if there were no content changes. We try to maintain that datetime as
+      # accurate as possible, so we want to trigger an update only if there was
+      # an actual change.
+      - uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          list-files: none
+          filters: |
+            readme:
+              - 'messages/readme.xml'
+            pronouns:
+              - 'messages/pronouns.xml'
+            year:
+              - 'messages/year.xml'
+            protectedgroups:
+              - 'messages/protectedgroups.xml'
+
+      - name: Update main README message
+        uses: compsoc-edinburgh/discord-post-updater@master
+        if: steps.changes.outputs.readme == 'true'
+        with:
+          discord_token: ${{ secrets.discord_bot_token }}
+          post_xml: messages/readme.xml
+          discord_channel: '716143154562203668' # N.B. The quote marks here are required
+          discord_message: '1008385178718191719' # Optional, use quotes if specifying an ID
+
+      - name: Update Pronouns
+        uses: compsoc-edinburgh/discord-post-updater@master
+        if: steps.changes.outputs.pronouns == 'true'
+        with:
+          discord_token: ${{ secrets.discord_bot_token }}
+          post_xml: messages/pronouns.xml
+          discord_channel: '716143154562203668' # N.B. The quote marks here are required
+          discord_message: '1008385179812892703' # Optional, use quotes if specifying an ID
+
+      - name: Update Academic Year
+        uses: compsoc-edinburgh/discord-post-updater@master
+        if: steps.changes.outputs.year == 'true'
+        with:
+          discord_token: ${{ secrets.discord_bot_token }}
+          post_xml: messages/year.xml
+          discord_channel: '716143154562203668' # N.B. The quote marks here are required
+          discord_message: '1008385180945363014' # Optional, use quotes if specifying an ID
+
+      - name: Update Protected Groups
+        uses: compsoc-edinburgh/discord-post-updater@master
+        if: steps.changes.outputs.protectedgroups == 'true'
+        with:
+          discord_token: ${{ secrets.discord_bot_token }}
+          post_xml: messages/protectedgroups.xml
+          discord_channel: '716143154562203668' # N.B. The quote marks here are required
+          discord_message: '1008385181977149610' # Optional, use quotes if specifying an ID

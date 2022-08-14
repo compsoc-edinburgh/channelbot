@@ -1,11 +1,19 @@
-FROM python:3
+FROM python:3.10
+
+# Set Poetry Version
+ENV POETRY_VERSION=1.1.13
+# Install Poetry
+RUN curl -sSL https://install.python-poetry.org | python3 - --version $POETRY_VERSION
+# Add poetry install location to PATH
+ENV PATH=/root/.local/bin:$PATH
 
 RUN mkdir /usr/src/app
 WORKDIR /usr/src/app
 
-COPY requirements.txt .
-RUN pip install -r requirements.txt
+COPY poetry.lock pyproject.toml ./
+RUN poetry install --no-root --no-dev
 
 COPY bot.py .
+COPY messages/ ./messages/
 
-CMD ["python", "bot.py"]
+CMD ["poetry", "run", "python", "bot.py"]
