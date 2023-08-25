@@ -17,6 +17,7 @@ Note: We're testing a native Discord UI for this selection, feel free to skip ov
 ⋮ ⋮
 :four: Fourth year
 :five: Fifth year in integrated masters, or First year in Masters
+:bookmark_tabs: PhD / PostDoc
 :mortar_board: Graduated
       ]]></content>
     </field>
@@ -44,6 +45,10 @@ Note: We're testing a native Discord UI for this selection, feel free to skip ov
   <button style="secondary" id="year_5" action="toggle-role:year:409496513044021248" row="1">
     <label></label>
     <emoji>5️⃣</emoji>
+  </button>
+  <button style="secondary" id="year_phd" action="toggle-role:year:1144643753085247619" row="1">
+    <label>PhD / Postdoc</label>
+    <emoji>📑</emoji>
   </button>
   <button style="secondary" id="year_grad" action="toggle-role:year:409496563686309892" row="1">
     <label>Graduated</label>
