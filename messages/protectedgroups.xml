@@ -16,6 +16,7 @@ We also have private "opt-in" channels for under represented groups within our s
 :transgender_flag: #trans - A space for the trans* friends of CompSoc
 :heart: #poc - A space for people of colour
 :rainbow_flag: #lgbtqia+ - A space with queer vibes
+:wheelchair: #disability - A space for those with disabilities or accessibility needs of all kinds
 :woman: #women - A space for women
 :hindu_temple: #hinduism - A hindu space
 :church: #christianity - A christian space
@@ -32,9 +33,13 @@ Not feeling represented? Message a Committee member or Discord Staff and we'll s
     <label>#poc</label>
     <emoji>❤️</emoji>
   </button>
-  <button style="secondary" id="protectedgroups_disabled" action="toggle-channel:774009955937812490" row="0">
+  <button style="secondary" id="protectedgroups_lgbtqia" action="toggle-channel:774009955937812490" row="0">
     <label>#lgbtqia+</label>
     <emoji>🏳️‍🌈</emoji>
+  </button>
+  <button style="secondary" id="protectedgroups_disability" action="toggle-channel:1156952305992732783" row="0">
+    <label>#disability</label>
+    <emoji>♿</emoji>
   </button>
   <button style="secondary" id="protectedgroups_women" action="toggle-channel:774009915634221056" row="1">
     <label>#women</label>
