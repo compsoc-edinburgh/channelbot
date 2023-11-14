@@ -26,11 +26,11 @@ Most of them are more-or-less obvious from their names, but here is a brief intr
 ━━
       ]]></content>
     </field>
-    <field inline>
+    <field inline="true">
       <title>aa</title>
       <content></content>
     </field>
-    <field inline>
+    <field inline="true">
       <title>bb</title>
       <content></content>
     </field>
