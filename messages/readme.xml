@@ -9,35 +9,86 @@ CompSoc is the University of Edinburgh's society for anyone interested in tech.
 ════════
     ]]></content>
     <field>
-      <title>SUMMARY OF CHANNELS</title>
+      <title>CHANNELS</title>
       <content><![CDATA[
-We have channels for general and academic chatting, each CompSoc interest group, The Tardis Project, and more.
-
-Most of them are more-or-less obvious from their names, but here is a brief introduction for you:
-
-- <#315277951597936640> is for any and all chat
-- <#426505712697344003> if you don't want to shitpost in #general
-- <#776739926536355852> for job postings, career chat, advice
-- <#697038282701406298> for elections, politics, news, and stuff that might burn you out
-- <#715859587148021850>, <#315278744572919809>, <#315278752508805131>, <#315278779054292992>, <#315278821362368512>, <#409847179247747073> for relevant academic chat. If you're on the MSc, pick inf5!
-- <#359905927643791360>, <#730146239315837052>, <#315506334864769024>, <#1130422421015498804>, <#1018880965134786570>, <#315278844842213379> for relevant [Special Interest Groups](https://comp-soc.com/special-interest-groups)
-- <id:browse> to see more!
+We have channels for general and academic chatting, each CompSoc SIG, and more!
+Browse the list on <id:browse> and customise your channel list!
 
 ━━
       ]]></content>
     </field>
-    <field inline="true">
-      <title>aa</title>
+    <field>
+      <title>SPECIAL INTEREST GROUPS</title>
       <content> </content>
     </field>
     <field inline="true">
-      <title>bb</title>
-      <content> </content>
+      <title>SIGINT</title>
+      <content><![CDATA[
+Cybersecurity
+-> <#359905927643791360>
+-> [Join Dedicated Discord](https://discord.gg/6aTwybA2Wj)
+-> [Website](https://sigint.mx)
+      ]]></content>
+    </field>
+    <field inline="true">
+      <title>GameDevSig</title>
+      <content><![CDATA[
+Game Development
+-> <#730146239315837052>
+-> [Join Dedicated Discord](https://discord.gg/DXd6sXNCGz)
+      ]]></content>
+    </field>
+    <field inline="true">
+      <title>Project Share</title>
+      <content><![CDATA[
+Personal Project Showcase
+-> <#1130422421015498804>
+-> [Join Dedicated Discord](https://discord.gg/wNGukFdBgp)
+      ]]></content>
+    </field>
+    <field inline="true">
+      <title>Tardis Project</title>
+      <content><![CDATA[
+Server Administration and Self-Hosting
+-> <#315278844842213379>
+-> [Website](https://tardisproject.uk)
+      ]]></content>
+    </field>
+    <field inline="true">
+      <title>TypeSig</title>
+      <content><![CDATA[
+Programming Languages and Compilers
+-> <#1156637304211906713>
+-> [Join Dedicated Discord](https://discord.gg/ZS5ctYQjzX)
+      ]]></content>
+    </field>
+    <field inline="true">
+      <title>QuantSIG</title>
+      <content><![CDATA[
+Finance and Trading
+-> <#1160622341026488461>
+-> [Join Dedicated Discord](https://discord.gg/dms5nEzBXv)
+      ]]></content>
+    </field>
+    <field inline="true">
+      <title>CloudSIG</title>
+      <content><![CDATA[
+Cloud Computing (registered AWS Cloud Club)
+-> <#1160622362614579300>
+-> [Join Dedicated Discord](https://discord.gg/ZcQgqKtdzk)
+-> [MeetUp.com](https://www.meetup.com/aws-cloud-club-the-university-of-edinburgh/)
+      ]]></content>
     </field>
     <field>
-      <title>WHAT ARE ALL THE BOTS?</title>
+      <title> </title>
       <content><![CDATA[
-CompSoc bridges communication between multiple platforms to allow you to chat across technical borders! At the moment we have Discord and IRC — so people on IRC show up as bots on Discord! Don't worry, we're not under a massive bot attack or anything :)
+━━
+      ]]></content>
+    </field>
+    <field>
+      <title>THERE ARE BOT USERS!</title>
+      <content><![CDATA[
+CompSoc bridges communication to IRC and individual SIG Discords where possible, to allow you to chat across technical borders. People on different servers show up as bots on Discord!
 
 ━━
       ]]></content>
@@ -45,7 +96,7 @@ CompSoc bridges communication between multiple platforms to allow you to chat ac
     <field>
       <title>WANT TO HELP SHAPE COMPSOC?</title>
       <content><![CDATA[
-If you are a first year, you can apply to become a first-year representative in autumn of your first year! This is a common and easy way to familiarise yourself with internals of the CompSoc org!
+If you are a first year, you can apply to become a **first-year representative** in autumn of your first year! This is a common and easy way to familiarise yourself with internals of the CompSoc org!
 For all other positions (including President, Secretary, Treasurer), elections for the subsequent academic year take place at the **Annual General Meeting** in April! You can nominate yourself!
 
 ━━
@@ -55,9 +106,9 @@ For all other positions (including President, Secretary, Treasurer), elections f
       <title>INVITES</title>
       <content><![CDATA[
 If you want to invite your friends to this server, send them this:
-[`https://comp-soc.com/chat`](https://comp-soc.com/chat)
+[https://comp-soc.com/chat](https://comp-soc.com/chat)
 If you know they prefer Discord you can use this invite link:
-[`https://discord.com/invite/e4y8Vy5`](https://discord.com/invite/e4y8Vy5)
+[https://discord.com/invite/e4y8Vy5](https://discord.com/invite/e4y8Vy5)
       ]]></content>
     </field>
   </embed>
