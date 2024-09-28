@@ -1,7 +1,7 @@
 FROM python:3.11
 
 # Set Poetry Version
-ENV POETRY_VERSION=1.1.13
+ENV POETRY_VERSION=1.8.3
 # Install Poetry
 RUN curl -sSL https://install.python-poetry.org | python3 - --version $POETRY_VERSION
 # Add poetry install location to PATH
