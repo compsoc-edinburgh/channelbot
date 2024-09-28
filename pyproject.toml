@@ -3,10 +3,12 @@ name = "channelbot"
 version = "0.1.0"
 description = ""
 authors = ["CompSoc <hello@comp-soc.com>"]
+package-mode = false
 
 [tool.poetry.dependencies]
-python = "^3.8"
-py-cord = "2.0.0"
+python = "^3.11"
+py-cord = "2.6.1"
+requests = "^2.32.3"
 
 [tool.poetry.dev-dependencies]
 

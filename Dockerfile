@@ -1,4 +1,4 @@
-FROM python:3.10
+FROM python:3.11
 
 # Set Poetry Version
 ENV POETRY_VERSION=1.1.13
