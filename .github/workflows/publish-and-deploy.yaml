@@ -34,4 +34,4 @@ jobs:
           docker push $IMAGE_ID:latest
       - name: Trigger update
         run: |
-          curl -H "Token: ${{ secrets.WATCHTOWER_TOKEN }}" https://watchtower.dev.comp-soc.com/v1/update
+          curl -H "Authorization: Bearer ${{ secrets.WATCHTOWER_TOKEN }}" https://watchtower.dev.comp-soc.com/v1/update
