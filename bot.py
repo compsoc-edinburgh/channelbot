@@ -235,12 +235,12 @@ async def on_message(message: discord.Message):
     if message.author == bot.user:
         return
 
-    await message.channel.trigger_typing()
-
     try:
         # Check if the message is a status check via a very simple:tm: regex
         # thx regex101.com
         if re.match(r"^(is +)?(my *ed|learn|[\/&\+])* +down( |\?|$)", message.content, re.IGNORECASE | re.MULTILINE):
+            await message.channel.trigger_typing()
+
             # check if myed is down
             try:
                 response = requests.get("https://www.myed.ed.ac.uk/myed-progressive/", timeout=5)
