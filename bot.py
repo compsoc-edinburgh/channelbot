@@ -16,7 +16,7 @@ import secrets as config
 
 class Bot(commands.bot):
     async def setup_hook():
-        command_hook.starT()
+        command_hook.start()
 
 bot_intents = discord.Intents.default()
 bot_intents.members = True
