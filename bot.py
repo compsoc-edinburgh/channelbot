@@ -4,19 +4,25 @@ import traceback
 import random
 import re
 import requests
+import time
+import whois
 from typing import List, Optional
 import xml.etree.ElementTree as ElementTree
 
 import discord
-from discord.ext import commands
+from discord.ext import commands, tasks
 
 import secrets as config
+
+class Bot(commands.bot):
+    async def setup_hook():
+        command_hook.start()
 
 bot_intents = discord.Intents.default()
 bot_intents.members = True
 bot_intents.message_content = True
 
-bot = commands.Bot(command_prefix=commands.when_mentioned_or("§"), intents=bot_intents)
+bot = Bot(command_prefix=commands.when_mentioned_or("§"), intents=bot_intents)
 
 def construct_filename_from_custom_id(custom_id: str) -> str:
     """
@@ -307,6 +313,95 @@ async def on_command_error(ctx, error):
         traceback.print_exception(
             type(error), error, error.__traceback__, file=sys.stderr
         )
+
+
+"""
+Domain checker checks our "core domains" for expiry dates. 
+
+Runs every 24 hours to check our core domains. 
+"""
+@tasks.loop(seconds=60*60*24) 
+async def check_domains():
+    domains = [
+        "comp-soc.com",
+        "hacktheburgh.com",
+        "betterinformatics.com",
+    ]
+
+    await bot.wait_until_ready()
+    guild = await bot.fetch_guild(315277951597936640)
+    if not guild:
+        print("Failed to get guild, exiting")
+        return
+
+    # Check expiry on each domain by making whois queries
+    messages = []
+    is_critical_notification = False
+    for domain in domains:
+        w = whois.query(domain)
+        if not w.expiration_date:
+            continue
+
+        # Check expiration timestamp and start building message
+        to_notify = False
+        expiration_unix_timestamp = w.expiration_date.timestamp()
+        if expiration_unix_timestamp < time.time():
+            messages.append(f"**Domain {domain} has expired!**")
+            is_critical_notification, to_notify = True, True
+        elif expiration_unix_timestamp < (time.time() - 60*60*24*31):
+            messages.append(f"Domain {domain} will expire in <31 days. Please renew before {w.expiration_date}.")
+            to_notify = True
+        
+        # Add registrar to the message if it's available
+        if to_notify and w.registrar:
+            messages.append(f"According to my whois lookup {domain}'s registrar is '{w.registrar}'")
+
+    # Only send discord message if a message has actually been generated
+    if messages:
+        # Build message content
+        message_content = "Messages from the CompSoc Bot regarding domain expiry:"
+        for message in messages:
+            message_content += f"\n- {message}"
+
+        # Select #committee channel, if that fails, message in #sigweb, if that fails randomly select a channel
+        channel = discord.utils.get(guild.text_channels, name="committee")
+        if not channel:
+            channel = discord.utils.get(guild.text_channels, name="sigweb")
+        if not channel:
+            channel = random.choice(guild.text_channels) # Randomly select a channel to send notification in
+
+        # Try to send in the originally chosen channel
+        try:
+            await channel.send(
+                embeds=[
+                    discord.Embed(
+                        title="Domain Notification",
+                        description=message_content,
+                        color=discord.Color.red() if is_critical_notification else discord.Color.yellow(),
+                    )
+                ],
+            )
+        except discord.ext.commands.MissingPermissions:
+            # If I fail, try to send in a randomly chosen channel 
+            # I'd prefer to avoid infinite loops, so I won't attempt to send again if this fails, but it should try again tomorrow
+            channel = random.choice(guild.text_channels) # Randomly select a channel to send notification in
+            message_content += b"\n Note: I attempted to send this in another channel, which failed."
+            await channel.send(
+                embeds=[
+                    discord.Embed(
+                        title="Domain Notification",
+                        description=message_content,
+                        color=discord.Color.red() if is_critical_notification else discord.Color.yellow(),
+                    )
+                ],
+            )
+
+# Stops check_domains from killing itself on error
+@check_domains.after_loop
+async def on_check_domains_cancel():
+    if check_domains.failed():
+        time.sleep(60*60)
+        check_domains.restart()
 
 
 if __name__ == "__main__":
