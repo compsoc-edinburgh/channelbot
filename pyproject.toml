@@ -9,6 +9,7 @@ package-mode = false
 python = "^3.11"
 py-cord = "2.6.1"
 requests = "^2.32.3"
+python-whois = "0.9.6"
 
 [tool.poetry.dev-dependencies]
 
