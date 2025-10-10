@@ -14,7 +14,7 @@ from discord.ext import commands, tasks
 
 import secrets as config
 
-class Bot(commands.bot):
+class Bot(commands.Bot):
     async def setup_hook():
         command_hook.start()
 
