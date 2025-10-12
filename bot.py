@@ -6,6 +6,7 @@ import re
 import requests
 import time
 import whois
+import os
 from typing import List, Optional
 import xml.etree.ElementTree as ElementTree
 
@@ -405,4 +406,4 @@ async def on_check_domains_cancel():
 
 
 if __name__ == "__main__":
-    bot.run(config.DISCORD_TOKEN)
+    bot.run(os.environ["DISCORD_TOKEN"])
