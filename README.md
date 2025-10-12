@@ -16,6 +16,7 @@ If you want to add a new embed message altogether, you have to also edit the Git
 
 The bot listens for click events on the buttons, reads its ID to decide on what to do, and actions them. The action can be toggling a role or toggling access to an opt-in channel. 
 
-Edit the bot if you want to change the bot's functionality, add more capabilities, or other things. You may want to clone and run locally to test. Pushing to GitHub will build an image and deploy it to production.
+Edit the bot if you want to change the bot's functionality, add more capabilities, or other things. You may want to clone and run locally to test. Pushing to GitHub will build an image and push it to ghcr.
 
-The production bot token is located on the deployment server (`deployment-host`), you shouldn't need to access it most of the time.
+This is now hosted in the [CompSoc k8s cluster](https://github.com/compsoc-edinburgh/CompSoc-k8s/tree/master/services/channelbot).
+
