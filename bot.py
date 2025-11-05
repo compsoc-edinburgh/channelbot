@@ -378,31 +378,103 @@ async def check_domains():
                     discord.Embed(
                         title="Domain Notification",
                         description=message_content,
-                        color=discord.Color.red() if is_critical_notification else discord.Color.yellow(),
+                        color=(
+                            discord.Color.red()
+                            if is_critical_notification
+                            else discord.Color.yellow()
+                        ),
                     )
                 ],
             )
         except discord.ext.commands.MissingPermissions:
-            # If I fail, try to send in a randomly chosen channel 
+            # If I fail, try to send in a randomly chosen channel
             # I'd prefer to avoid infinite loops, so I won't attempt to send again if this fails, but it should try again tomorrow
-            channel = random.choice(guild.text_channels) # Randomly select a channel to send notification in
-            message_content += b"\n Note: I attempted to send this in another channel, which failed."
+            channel = random.choice(
+                guild.text_channels
+            )  # Randomly select a channel to send notification in
+            message_content += (
+                b"\n Note: I attempted to send this in another channel, which failed."
+            )
             await channel.send(
                 embeds=[
                     discord.Embed(
                         title="Domain Notification",
                         description=message_content,
-                        color=discord.Color.red() if is_critical_notification else discord.Color.yellow(),
+                        color=(
+                            discord.Color.red()
+                            if is_critical_notification
+                            else discord.Color.yellow()
+                        ),
                     )
                 ],
             )
+
 
 # Stops check_domains from killing itself on error
 @check_domains.after_loop
 async def on_check_domains_cancel():
     if check_domains.failed():
-        time.sleep(60*60)
+        time.sleep(60 * 60)
         check_domains.restart()
+
+
+@bot.event
+async def on_message(message: discord.Message):
+    """Handler for auto-upvote/downvoting messages in the server suggestions
+    channel.
+
+    Parameters
+    ----------
+    message : discord.Message
+    """
+    if message.author == bot.user:
+        # Don't run for own messages
+        return
+
+    if message.guild is None:
+        # Don't run in DMs
+        return
+
+    if (
+        "SERVER_SUGGESTIONS_DISABLE" in os.environ
+        and os.environ["SERVER_SUGGESTIONS_DISABLE"] == "1"
+    ):
+        # Allow disabling via environment variable
+        return
+
+    if (
+        "SERVER_SUGGESTIONS_CHANNEL_ID" not in os.environ
+        or "SERVER_SUGGESTIONS_GUILD_ID" not in os.environ
+        or "SERVER_SUGGESTIONS_UP_EMOJI_ID" not in os.environ
+        or "SERVER_SUGGESTIONS_DOWN_EMOJI_ID" not in os.environ
+    ):
+        # None of channel, guild, emoji ID were provided
+        print("One or more of the following environment variables not provided:")
+        print("- SERVER_SUGGESTIONS_CHANNEL_ID")
+        print("- SERVER_SUGGESTIONS_GUILD_ID")
+        print("- SERVER_SUGGESTIONS_UP_EMOJI_ID")
+        print("- SERVER_SUGGESTIONS_DOWN_EMOJI_ID")
+        print(
+            "To disable auto-reactions for server suggestions, set SERVER_SUGGESTIONS_DISABLE=1"
+        )
+        return
+
+    if (
+        str(message.channel.id) != os.environ["SERVER_SUGGESTIONS_CHANNEL_ID"]
+        or str(message.guild.id) != os.environ["SERVER_SUGGESTIONS_GUILD_ID"]
+    ):
+        # Does not match the configuration channel/guild
+        return
+
+    up_emoji = bot.get_emoji(int(os.environ["SERVER_SUGGESTIONS_UP_EMOJI_ID"]))
+    down_emoji = bot.get_emoji(int(os.environ["SERVER_SUGGESTIONS_DOWN_EMOJI_ID"]))
+
+    if up_emoji is None or down_emoji is None:
+        print("Up or down emoji could not be found from IDs; re-check config!")
+        return
+
+    await message.add_reaction(emoji=up_emoji)
+    await message.add_reaction(emoji=down_emoji)
 
 
 if __name__ == "__main__":
