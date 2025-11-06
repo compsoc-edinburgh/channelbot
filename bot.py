@@ -476,8 +476,8 @@ async def handle_suggestion_react(message: discord.Message):
 
 @bot.event
 async def on_message(message: discord.Message):
-    handle_suggestion_react(message)
-    on_message_handle_is_myed_down(message)
+    await handle_suggestion_react(message)
+    await on_message_handle_is_myed_down(message)
     
 
 if __name__ == "__main__":
