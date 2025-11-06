@@ -238,7 +238,7 @@ async def report(ctx, *, member):
     )
 
 @bot.event
-async def on_message(message: discord.Message):
+async def on_message_handle_is_myed_down(message: discord.Message):
     if message.author == bot.user:
         return
 
@@ -419,7 +419,7 @@ async def on_check_domains_cancel():
 
 
 @bot.event
-async def on_message(message: discord.Message):
+async def on_message_handle_server_suggestions(message: discord.Message):
     """Handler for auto-upvote/downvoting messages in the server suggestions
     channel.
 
