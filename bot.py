@@ -238,72 +238,6 @@ async def report(ctx, *, member):
     )
 
 @bot.event
-async def on_message_handle_is_myed_down(message: discord.Message):
-    if message.author == bot.user:
-        return
-
-    try:
-        # Check if the message is a status check via a very simple:tm: regex
-        # thx regex101.com
-        if re.match(r"^(is +)?(my *ed|learn|[\/&\+])* +down( |\?|$)", message.content, re.IGNORECASE | re.MULTILINE):
-            await message.channel.trigger_typing()
-
-            # check if myed is down
-            try:
-                response = requests.get("https://www.myed.ed.ac.uk/myed-progressive/", timeout=5)
-                # check if the status code is 200
-                myed_up = response.status_code == 200
-                myed_down_reason = None if myed_up else "Status: " + str(response.status_code)
-            except requests.exceptions.RequestException as e:
-                # some connection error e.g. name not resolved
-                myed_up = False
-                myed_down_reason = str(e)
-
-            # check if learn is down
-            try:
-                response = requests.get("https://www.learn.ed.ac.uk/", timeout=5)
-                # check if the status code is 200
-                learn_up = response.status_code == 200
-                learn_down_reason = None if learn_up else "Status: " + str(response.status_code)
-            except requests.exceptions.RequestException as e:
-                # some connection error e.g. name not resolved
-                learn_up = False
-                learn_down_reason = str(e)
-
-            random_response = [
-                "I can answer that!",
-                "Uni Service Status",
-                "Maybe I can help!",
-                "May I interest you in some service status?",
-            ]
-
-            # Response with the status of the services in a nice embed
-            await message.channel.send(
-                embeds=[
-                    discord.Embed(
-                        title=random.choice(random_response),
-                        description=f"Here's the current status of the University's services.\nFor accurate info, see https://alerts.is.ed.ac.uk/",
-                        color=discord.Color.green() if myed_up and learn_up else discord.Color.red(),
-                        fields=[
-                            discord.EmbedField(
-                                name="MyEd",
-                                value=("✅ Up" if myed_up else f"❌ Down ({myed_down_reason})") + "\n" + "https://www.myed.ed.ac.uk/myed-progressive/",
-                                inline=False,
-                            ),
-                            discord.EmbedField(
-                                name="Learn",
-                                value=("✅ Up" if learn_up else f"❌ Down ({learn_down_reason})") + "\n" + "https://www.learn.ed.ac.uk/",
-                                inline=False,
-                            ),
-                        ]
-                    )
-                ],
-            )
-    except Exception:
-        # Send any form of error message to the channel
-        await message.channel.send("```" + traceback.format_exc() + "```")
-
-@bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.errors.CheckFailure):
         print(
@@ -418,8 +352,72 @@ async def on_check_domains_cancel():
         check_domains.restart()
 
 
-@bot.event
-async def on_message_handle_server_suggestions(message: discord.Message):
+async def on_message_handle_is_myed_down(message: discord.Message):
+    if message.author == bot.user:
+        return
+
+    try:
+        # Check if the message is a status check via a very simple:tm: regex
+        # thx regex101.com
+        if re.match(r"^(is +)?(my *ed|learn|[\/&\+])* +down( |\?|$)", message.content, re.IGNORECASE | re.MULTILINE):
+            await message.channel.trigger_typing()
+
+            # check if myed is down
+            try:
+                response = requests.get("https://www.myed.ed.ac.uk/myed-progressive/", timeout=5)
+                # check if the status code is 200
+                myed_up = response.status_code == 200
+                myed_down_reason = None if myed_up else "Status: " + str(response.status_code)
+            except requests.exceptions.RequestException as e:
+                # some connection error e.g. name not resolved
+                myed_up = False
+                myed_down_reason = str(e)
+
+            # check if learn is down
+            try:
+                response = requests.get("https://www.learn.ed.ac.uk/", timeout=5)
+                # check if the status code is 200
+                learn_up = response.status_code == 200
+                learn_down_reason = None if learn_up else "Status: " + str(response.status_code)
+            except requests.exceptions.RequestException as e:
+                # some connection error e.g. name not resolved
+                learn_up = False
+                learn_down_reason = str(e)
+
+            random_response = [
+                "I can answer that!",
+                "Uni Service Status",
+                "Maybe I can help!",
+                "May I interest you in some service status?",
+            ]
+
+            # Response with the status of the services in a nice embed
+            await message.channel.send(
+                embeds=[
+                    discord.Embed(
+                        title=random.choice(random_response),
+                        description=f"Here's the current status of the University's services.\nFor accurate info, see https://alerts.is.ed.ac.uk/",
+                        color=discord.Color.green() if myed_up and learn_up else discord.Color.red(),
+                        fields=[
+                            discord.EmbedField(
+                                name="MyEd",
+                                value=("✅ Up" if myed_up else f"❌ Down ({myed_down_reason})") + "\n" + "https://www.myed.ed.ac.uk/myed-progressive/",
+                                inline=False,
+                            ),
+                            discord.EmbedField(
+                                name="Learn",
+                                value=("✅ Up" if learn_up else f"❌ Down ({learn_down_reason})") + "\n" + "https://www.learn.ed.ac.uk/",
+                                inline=False,
+                            ),
+                        ]
+                    )
+                ],
+            )
+    except Exception:
+        # Send any form of error message to the channel
+        await message.channel.send("```" + traceback.format_exc() + "```")
+
+async def handle_suggestion_react(message: discord.Message):
     """Handler for auto-upvote/downvoting messages in the server suggestions
     channel.
 
@@ -476,6 +474,11 @@ async def on_message_handle_server_suggestions(message: discord.Message):
     await message.add_reaction(emoji=up_emoji)
     await message.add_reaction(emoji=down_emoji)
 
+@bot.event
+async def on_message(message: discord.Message):
+    handle_suggestion_react(message)
+    on_message_handle_is_myed_down(message)
+    
 
 if __name__ == "__main__":
     bot.run(os.environ["DISCORD_TOKEN"])
