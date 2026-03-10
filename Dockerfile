@@ -11,7 +11,7 @@ RUN mkdir /usr/src/app
 WORKDIR /usr/src/app
 
 COPY poetry.lock pyproject.toml ./
-RUN poetry install --no-root --no-dev
+RUN poetry install --no-root --only main
 
 COPY bot.py .
 COPY messages/ ./messages/
