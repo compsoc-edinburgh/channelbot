@@ -433,6 +433,10 @@ async def handle_suggestion_react(message: discord.Message):
         # Don't run in DMs
         return
 
+    if message.is_system():
+        # Don't run for system messages
+        return
+
     if (
         "SERVER_SUGGESTIONS_DISABLE" in os.environ
         and os.environ["SERVER_SUGGESTIONS_DISABLE"] == "1"
