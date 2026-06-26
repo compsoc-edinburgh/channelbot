@@ -7,13 +7,30 @@ import requests
 import time
 import whois
 import os
+from datetime import timedelta
 from typing import List, Optional
 import xml.etree.ElementTree as ElementTree
+
+sys.stdout = sys.stderr
 
 import discord
 from discord.ext import commands, tasks
 
 import secrets as config
+
+HONEYPOT_CHANNEL_ID = os.environ.get("HONEYPOT_CHANNEL_ID") if "HONEYPOT_CHANNEL_ID" in os.environ else "1519984051795136512"
+
+MODERATION_CHANNEL_ID = os.environ.get("MODERATION_CHANNEL_ID") if "MODERATION_CHANNEL_ID" in os.environ else "771063963605663835"
+
+
+if "HONEYPOT_CHANNEL_ID" not in os.environ:
+    print("Channel ID for Honeypot is not in environment variables. You must "
+          "create a key called HONEYPOT_CHANNEL_ID with the channel id value.")
+
+if "MODERATION_CHANNEL_ID" not in os.environ:
+    print("Channel ID for Honeypot is not in environment variables. You must "
+          "create a key called MODERATION_CHANNEL_ID with the channel id "
+          "value.")
 
 class Bot(commands.Bot):
     async def setup_hook():
@@ -251,11 +268,11 @@ async def on_command_error(ctx, error):
 
 
 """
-Domain checker checks our "core domains" for expiry dates. 
+Domain checker checks our "core domains" for expiry dates.
 
-Runs every 24 hours to check our core domains. 
+Runs every 24 hours to check our core domains.
 """
-@tasks.loop(seconds=60*60*24) 
+@tasks.loop(seconds=60*60*24)
 async def check_domains():
     domains = [
         "comp-soc.com",
@@ -286,7 +303,7 @@ async def check_domains():
         elif expiration_unix_timestamp < (time.time() - 60*60*24*31):
             messages.append(f"Domain {domain} will expire in <31 days. Please renew before {w.expiration_date}.")
             to_notify = True
-        
+
         # Add registrar to the message if it's available
         if to_notify and w.registrar:
             messages.append(f"According to my whois lookup {domain}'s registrar is '{w.registrar}'")
@@ -478,11 +495,61 @@ async def handle_suggestion_react(message: discord.Message):
     await message.add_reaction(emoji=up_emoji)
     await message.add_reaction(emoji=down_emoji)
 
+async def handle_spam_pings(user_id: int, guild_id: int):
+    """Delete 10 minutes of previous messages and suspend for 24 hours if a
+    user sends a message in the honeypot channel"""
+
+    cutoff_time = discord.utils.utcnow() - timedelta(minutes=10)
+    guild = bot.get_guild(guild_id)
+
+    if not guild:
+        print(f"Guild {guild_id} not found")
+        return
+
+    try:
+        member = guild.get_member(user_id)
+
+        if member:
+            for channel in guild.text_channels:
+                deleted = await channel.purge(
+                    limit=None,
+                    after=cutoff_time,
+                    check=lambda msg: msg.author.id == member.id
+                )
+
+                print(f"@{member.name}'s deleted messages in #{channel.name}: {deleted}")
+
+            await member.timeout(
+                discord.utils.utcnow() + timedelta(days=1),
+                reason="Spamming"
+            )
+
+            print(f"{member.name} timed out")
+
+            mod_channel = bot.get_channel(MODERATION_CHANNEL_ID)
+            if mod_channel:
+                await mod_channel.send(
+                    f"User {member.name} has been suspended for 24 hours "
+                    f"for sending a message in the honeypot channel"
+                )
+            else:
+                print("Mod channel not found")
+                return
+        else:
+            print("User to moderate not found.")
+            return 
+    except discord.Forbidden:
+        print(f"Bot does not have permissions to delete spam in {channel.name}")
+    except discord.HTTPException as e:
+        print(f"Error purging channel {channel.name}: {e}")
+
 @bot.event
 async def on_message(message: discord.Message):
     await handle_suggestion_react(message)
     await on_message_handle_is_myed_down(message)
-    
+
+    if str(message.channel.id) == HONEYPOT_CHANNEL_ID:
+        await handle_spam_pings(message.author.id, message.guild.id)
 
 if __name__ == "__main__":
     bot.run(os.environ["DISCORD_TOKEN"])
