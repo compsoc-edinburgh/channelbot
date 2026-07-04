@@ -10,6 +10,7 @@ import os
 from datetime import timedelta
 from typing import List, Optional
 import xml.etree.ElementTree as ElementTree
+import asyncio
 
 sys.stdout = sys.stderr
 
@@ -526,7 +527,7 @@ async def handle_spam_pings(user_id: int, guild_id: int):
 
             print(f"{member.name} timed out")
 
-            mod_channel = bot.get_channel(MODERATION_CHANNEL_ID)
+            mod_channel = guild.get_channel(MODERATION_CHANNEL_ID)
             if mod_channel:
                 await mod_channel.send(
                     f"User {member.name} has been suspended for 24 hours "
@@ -549,7 +550,7 @@ async def on_message(message: discord.Message):
     await on_message_handle_is_myed_down(message)
 
     if str(message.channel.id) == HONEYPOT_CHANNEL_ID:
-        await handle_spam_pings(message.author.id, message.guild.id)
+        asyncio.create_task(handle_spam_pings(message.author.id, message.guild.id))
 
 if __name__ == "__main__":
     bot.run(os.environ["DISCORD_TOKEN"])
