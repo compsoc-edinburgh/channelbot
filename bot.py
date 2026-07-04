@@ -547,10 +547,11 @@ async def handle_spam_pings(user_id: int, guild_id: int):
 @bot.event
 async def on_message(message: discord.Message):
     await handle_suggestion_react(message)
-    await on_message_handle_is_myed_down(message)
-
+    
     if str(message.channel.id) == HONEYPOT_CHANNEL_ID:
         asyncio.create_task(handle_spam_pings(message.author.id, message.guild.id))
+    else:
+        await on_message_handle_is_myed_down(message)
 
 if __name__ == "__main__":
     bot.run(os.environ["DISCORD_TOKEN"])
