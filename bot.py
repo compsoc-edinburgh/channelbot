@@ -511,6 +511,11 @@ async def handle_spam_pings(user_id: int, guild_id: int):
         member = guild.get_member(user_id)
 
         if member:
+            await member.timeout(
+                discord.utils.utcnow() + timedelta(days=1),
+                reason="Spamming"
+            )
+
             for channel in guild.text_channels:
                 deleted = await channel.purge(
                     limit=None,
@@ -520,14 +525,9 @@ async def handle_spam_pings(user_id: int, guild_id: int):
 
                 print(f"@{member.name}'s deleted messages in #{channel.name}: {deleted}")
 
-            await member.timeout(
-                discord.utils.utcnow() + timedelta(days=1),
-                reason="Spamming"
-            )
-
             print(f"{member.name} timed out")
 
-            mod_channel = guild.get_channel(MODERATION_CHANNEL_ID)
+            mod_channel = client.get_channel(MODERATION_CHANNEL_ID)
             if mod_channel:
                 await mod_channel.send(
                     f"User {member.name} has been suspended for 24 hours "
