@@ -1,4 +1,5 @@
 # channelbot
+[![Docker](https://github.com/compsoc-edinburgh/channelbot/actions/workflows/publish-and-deploy.yaml/badge.svg)](https://github.com/compsoc-edinburgh/channelbot/actions/workflows/publish-and-deploy.yaml)
 
 The role/channel opt-in selection works in two components: the messages themselves and the bot.
 
