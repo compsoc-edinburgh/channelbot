@@ -529,17 +529,18 @@ async def handle_spam_pings(user_id: int, guild_id: int, content: str):
 
             mod_channel = bot.get_channel(int(MODERATION_CHANNEL_ID))
             if mod_channel:
+                quoted_msg = '\n'.join(['> ' + str(x) for x in content.split('\n')])
                 await mod_channel.send(
                     f"User {member.name} has been suspended for 24 hours "
-                    f"for sending a message in the honeypot channel:\n"
-                    f"{'\n'.join(['> ' + str(x) for x in content.split('\n')])}"
+                    "for sending a message in the honeypot channel:\n"
+                    f"{quoted_msg}"
                 )
             else:
                 print("Mod channel not found")
                 return
         else:
             print("User to moderate not found.")
-            return 
+            return
     except discord.Forbidden:
         print(f"Bot does not have permissions to delete spam in {channel.name}")
     except discord.HTTPException as e:
@@ -548,7 +549,7 @@ async def handle_spam_pings(user_id: int, guild_id: int, content: str):
 @bot.event
 async def on_message(message: discord.Message):
     await handle_suggestion_react(message)
-    
+
     if str(message.channel.id) == HONEYPOT_CHANNEL_ID:
         asyncio.create_task(handle_spam_pings(message.author.id, message.guild.id, message.content))
     else:
