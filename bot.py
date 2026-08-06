@@ -496,7 +496,7 @@ async def handle_suggestion_react(message: discord.Message):
     await message.add_reaction(emoji=up_emoji)
     await message.add_reaction(emoji=down_emoji)
 
-async def handle_spam_pings(user_id: int, guild_id: int):
+async def handle_spam_pings(user_id: int, guild_id: int, content: str):
     """Delete 10 minutes of previous messages and suspend for 24 hours if a
     user sends a message in the honeypot channel"""
 
@@ -532,7 +532,7 @@ async def handle_spam_pings(user_id: int, guild_id: int):
                 await mod_channel.send(
                     f"User {member.name} has been suspended for 24 hours "
                     f"for sending a message in the honeypot channel: "
-                    f"{message.content}"
+                    f"{content}"
                 )
             else:
                 print("Mod channel not found")
@@ -550,7 +550,7 @@ async def on_message(message: discord.Message):
     await handle_suggestion_react(message)
     
     if str(message.channel.id) == HONEYPOT_CHANNEL_ID:
-        asyncio.create_task(handle_spam_pings(message.author.id, message.guild.id))
+        asyncio.create_task(handle_spam_pings(message.author.id, message.guild.id, message.content))
     else:
         await on_message_handle_is_myed_down(message)
 
