@@ -531,8 +531,8 @@ async def handle_spam_pings(user_id: int, guild_id: int, content: str):
             if mod_channel:
                 await mod_channel.send(
                     f"User {member.name} has been suspended for 24 hours "
-                    f"for sending a message in the honeypot channel: "
-                    f"{content}"
+                    f"for sending a message in the honeypot channel:\n"
+                    f"{content.split("\n").map(\x -> "> " + x).join("\n")}"
                 )
             else:
                 print("Mod channel not found")
