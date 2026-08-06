@@ -527,7 +527,7 @@ async def handle_spam_pings(user_id: int, guild_id: int):
 
             print(f"{member.name} timed out")
 
-            mod_channel = bot.get_channel(MODERATION_CHANNEL_ID)
+            mod_channel = bot.get_channel(int(MODERATION_CHANNEL_ID))
             if mod_channel:
                 await mod_channel.send(
                     f"User {member.name} has been suspended for 24 hours "
