@@ -12,6 +12,9 @@ from typing import List, Optional
 import xml.etree.ElementTree as ElementTree
 import asyncio
 
+from PIL import Image
+import imagehash
+
 sys.stdout = sys.stderr
 
 import discord
@@ -22,6 +25,8 @@ import secrets as config
 HONEYPOT_CHANNEL_ID = os.environ.get("HONEYPOT_CHANNEL_ID") if "HONEYPOT_CHANNEL_ID" in os.environ else "1519984051795136512"
 
 MODERATION_CHANNEL_ID = os.environ.get("MODERATION_CHANNEL_ID") if "MODERATION_CHANNEL_ID" in os.environ else "771063963605663835"
+
+MALICIOUS_HASHES = [x for x in os.environ.get("MALICIOUS_HASHES").split(',')] if MALICIOUS_HASHES in os.environ else ["946a6e94cac9b6c9"]
 
 
 if "HONEYPOT_CHANNEL_ID" not in os.environ:
@@ -546,12 +551,26 @@ async def handle_spam_pings(user_id: int, guild_id: int, content: str):
     except discord.HTTPException as e:
         print(f"Error purging channel {channel.name}: {e}")
 
+async def check_image_fuzzy_hashes(message: discord.Message):
+    for attachment in message.attachments:
+        if "image/" not in attachment.content_type:
+            continue
+        with tempfile.TemporaryFile() as fp:
+            await message.save(fp)
+            img = Image.open(fp)
+            h = str(imagehash.phash(img))
+            if h in MALICIOUS_HASHES:
+                asyncio.create_task(handle_spam_pings(message.author.id, message.guild.id, message.content))
+                break
+
 @bot.event
 async def on_message(message: discord.Message):
     await handle_suggestion_react(message)
 
     if str(message.channel.id) == HONEYPOT_CHANNEL_ID:
         asyncio.create_task(handle_spam_pings(message.author.id, message.guild.id, message.content))
+    elif len(message.attachments) > 0:
+        await check_image_fuzzy_hashes(messages)
     else:
         await on_message_handle_is_myed_down(message)
 
