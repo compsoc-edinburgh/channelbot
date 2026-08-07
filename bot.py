@@ -570,7 +570,7 @@ async def on_message(message: discord.Message):
     if str(message.channel.id) == HONEYPOT_CHANNEL_ID:
         asyncio.create_task(handle_spam_pings(message.author.id, message.guild.id, message.content))
     elif len(message.attachments) > 0:
-        await check_image_fuzzy_hashes(messages)
+        await check_image_fuzzy_hashes(message)
     else:
         await on_message_handle_is_myed_down(message)
 
