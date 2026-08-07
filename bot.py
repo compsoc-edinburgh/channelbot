@@ -26,7 +26,7 @@ HONEYPOT_CHANNEL_ID = os.environ.get("HONEYPOT_CHANNEL_ID") if "HONEYPOT_CHANNEL
 
 MODERATION_CHANNEL_ID = os.environ.get("MODERATION_CHANNEL_ID") if "MODERATION_CHANNEL_ID" in os.environ else "771063963605663835"
 
-MALICIOUS_HASHES = [x for x in os.environ.get("MALICIOUS_HASHES").split(',')] if MALICIOUS_HASHES in os.environ else ["946a6e94cac9b6c9"]
+MALICIOUS_HASHES = [x for x in os.environ.get("MALICIOUS_HASHES").split(',')] if "MALICIOUS_HASHES" in os.environ else ["946a6e94cac9b6c9"]
 
 
 if "HONEYPOT_CHANNEL_ID" not in os.environ:
