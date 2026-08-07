@@ -557,7 +557,7 @@ async def check_image_fuzzy_hashes(message: discord.Message):
         if "image/" not in attachment.content_type:
             continue
         with tempfile.TemporaryFile() as fp:
-            await message.save(fp)
+            await attachment.save(fp)
             img = Image.open(fp)
             h = str(imagehash.phash(img))
             if h in MALICIOUS_HASHES:
